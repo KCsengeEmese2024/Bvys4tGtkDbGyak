@@ -1,0 +1,80 @@
+1. Pilóták neve és rajtszáma szerinti lista
+
+SELECT Név, Rajtszám, Konstruktőr
+FROM Pilóták
+ORDER BY Rajtszám;
+
+
+2. Legmagasabb pilóta neve és magassága
+
+SELECT Név, Magasság_cm 
+FROM Pilóták
+ORDER BY Magasság_cm DESC
+LIMIT 1;
+
+
+3. Mercedes pilóták és rajtszámuk
+
+SELECT Név, Rajtszám 
+FROM Pilóták
+WHERE Konstruktőr = 'Mercedes';
+
+
+4. Nagydíjak átlagos körszáma
+
+SELECT AVG(Körök_száma) AS Átlagos_Körszám
+FROM Nagydíjak;
+
+
+5. Pilóták pontjai összesítve minden versenyen
+
+SELECT P.Név, SUM(E.Pontszám) AS Összes_Pont
+FROM Pilóták P
+JOIN Eredmény E ON P.Rajtszám = E.Versenyző_rajtszáma
+GROUP BY P.Név
+ORDER BY Összes_Pont DESC;
+
+
+6. Az első helyezések száma pilótánként
+
+SELECT P.Név, COUNT(*) AS Első_Helyek
+FROM Pilóták P
+JOIN Eredmény E ON P.Rajtszám = E.Versenyző_rajtszáma
+WHERE E.Pozíció = 1
+GROUP BY P.Név
+ORDER BY Első_Helyek DESC;
+
+
+7.Olaszországban rendezett versenyek és győztesük
+
+SELECT N.Nagydíj, P.Név AS Győztes
+FROM Nagydíjak N
+JOIN Eredmény E ON N.Verseny_id = E.Nagydíjon
+JOIN Pilóták P ON E.Versenyző_rajtszáma = P.Rajtszám
+WHERE N.Ország = 'Olaszország' AND E.Pozíció = 1;
+
+
+8.Az összes versenyző és konstruktőr párosítása
+
+SELECT P.Név AS Pilóta, P.Konstruktőr AS Csapat, C.Csapat_név 
+FROM Pilóták P
+JOIN Csapatok C ON P.Konstruktőr = C.Csapat_id
+ORDER BY Csapat, Pilóta;
+
+
+9. Listázd azokat a nagydíjakat, ahol a versenytáv meghaladja a 300 km-t!
+
+SELECT Nagydíj, Körök_száma * Pálya_hossza_méterben / 1000 AS Versenytáv_km 
+FROM Nagydíjak 
+WHERE Körök_száma * Pálya_hossza_méterben > 300000;
+
+
+10. az európai versenyeken szerzett átlagos pontszám pilótánként
+
+SELECT p.Név AS Pilóta, AVG(e.Pontszám) AS Átlagos_pontszám
+FROM Eredmény e
+JOIN Pilóták p ON e.Versenyző_rajtszáma = p.Rajtszám
+JOIN Nagydíjak n ON e.Nagydíjon = n.Verseny_id
+WHERE n.Kontinens = 'Európa'
+GROUP BY p.Név
+ORDER BY Átlagos_pontszám DESC;
