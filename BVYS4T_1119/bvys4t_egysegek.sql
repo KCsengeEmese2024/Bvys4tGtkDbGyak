@@ -1,0 +1,5 @@
+CREATE TABLE Egysegek (
+    EgysegID INT PRIMARY KEY AUTO_INCREMENT,
+    Nev VARCHAR(50) NOT NULL,
+    Mertekegyseg VARCHAR(50)
+);

@@ -1,0 +1,8 @@
+CREATE TABLE Termek (
+    TermekID INT PRIMARY KEY AUTO_INCREMENT,
+    Nev VARCHAR(100) NOT NULL,
+    Kategoria VARCHAR(100),
+    Ar DECIMAL(10, 2),
+    GyartoID INT,
+    FOREIGN KEY (GyartoID) REFERENCES Gyarto(GyartoID)
+);

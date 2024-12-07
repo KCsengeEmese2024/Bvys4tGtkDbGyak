@@ -1,0 +1,5 @@
+CREATE TABLE Gyarto (
+    GyartoID INT PRIMARY KEY AUTO_INCREMENT,
+    Nev VARCHAR(100) NOT NULL,
+    SzarmazasiOrszag VARCHAR(100)
+);
